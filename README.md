@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  A Snyk Netlify build plugin
+  A Netlify Build plugin to find security vulnerabilities
 </p>
 
 <p align="center">
@@ -18,24 +18,37 @@
 
 # About
 
-A Snyk Netlify build plugin
-
-# Install
-
-```bash
-npm add netlify-plugin-snyk
-```
+A Snyk Netlify build plugin to add to your Netlify website's pipeline and guard you from deploying static websites with known JavaScript vulnerabilities.
 
 # Usage
 
-```js
-// @TODO
-const {} = require('netlify-plugin-snyk')
-```
+How to add security controls to your website build pipeline in 3 easy steps?
+
+1. **Add the plugin!**
+
+   If you're using Netlify's UI, browse the _Plugins_ directory and add `netlify-plugin-snyk` to your website project. Or you can also declare the plugin via a `netlify.yoml` configuration file as follows:
+
+   ```
+   # netlify.toml
+   [[plugins]]
+   package = "netlify-plugin-snyk"
+   ```
+
+2) **Configure the Snyk API token**
+
+   If you alreay have the Snyk CLI installed you can get the token via `snyk config get api` and add an entry in Netlify's [Environment variable settings page](https://app.netlify.com/sites/speak-easy/settings/deploys#environment) with variable name `SNYK_TOKEN`.
+
+   To obtain a Snyk API token go to `https://app.snyk.io/account`.
+
+3. **Deploy safely** 🐶
+
+# Configuration
+
+TBD
 
 # Example
 
-<!-- TODO -->
+TBD
 
 # Contributing
 

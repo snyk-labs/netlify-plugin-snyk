@@ -1,0 +1,5 @@
+name: netlify-plugin-snyk
+inputs:
+  - name: severity
+    required: false
+    default: low

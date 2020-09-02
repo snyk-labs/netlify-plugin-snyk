@@ -2,7 +2,7 @@
   "name": "netlify-plugin-snyk",
   "version": "0.0.0-development",
   "description": "A Snyk Netlify build plugin",
-  "main": "index.js",
+  "main": "src/index.js",
   "engines": {
     "node": ">=10.0.0"
   },
@@ -40,7 +40,8 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
-    "debug": "^4.1.1"
+    "debug": "^4.1.1",
+    "snyk": "^1.387.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.2.1",
