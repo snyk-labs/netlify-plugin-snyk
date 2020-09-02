@@ -19,7 +19,7 @@ module.exports = {
       console.log(testResultsString)
       console.log(chalk.red(`Snyk test found security vulnerabilities in production dependencies.`))
       console.log(chalk.red(`It is recommended you review before deploying`))
-      utils.build.failBuild(`error, security vulnerabilities detected.`)
+      utils.build.failBuild(`security vulnerabilities detected.`)
     } else {
       console.log(chalk.green(`Snyk security test completed. no vulnerable paths found.`))
       console.log(chalk.green(`You're good to go, sir!`))
