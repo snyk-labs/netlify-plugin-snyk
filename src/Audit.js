@@ -1,13 +1,12 @@
 /* eslint-disable security/detect-child-process */
 'use strict'
 
-const path = require('path')
 const Util = require('util')
 const debug = require('debug')('netlify-plugin-snyk')
 const ChildProcess = require('child_process')
 
-const nodeCliCommand = 'node'
-const auditCliCommand = path.join(__dirname, '../node_modules/snyk/dist/cli/index.js')
+const nodeCliCommand = 'npx'
+const auditCliCommand = 'snyk'
 const auditCliArgs = [auditCliCommand, 'test']
 const ERROR_VULNS_FOUND = 1
 const ERROR_UNAUTHENTICATED = 2
