@@ -38,7 +38,9 @@ How to add security controls to your website build pipeline in 3 easy steps?
 
    If you alreay have the Snyk CLI installed you can get the token via `snyk config get api` and add an entry in Netlify's [Environment variable settings page](https://app.netlify.com/sites/speak-easy/settings/deploys#environment) with variable name `SNYK_TOKEN`.
 
-   To obtain a Snyk API token go to `https://app.snyk.io/account`.
+   Note: For CI integrations and alike, we recommend creating a [Service account](https://support.snyk.io/hc/en-us/articles/360004037597-Service-accounts) (available on the [pro plan](https://app.snyk.io/org/lirantal/manage/billing)) at an org-level to avoid coupling the Snyk token to a personal user account.
+
+To obtain a Snyk API token go to `https://app.snyk.io/account`.
 
 3. **Deploy safely** 🐶
 
