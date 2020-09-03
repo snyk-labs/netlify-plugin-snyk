@@ -19,32 +19,7 @@ const shellEnvVariables = Object.assign({}, process.env, {
 })
 
 class Audit {
-  async authenticate() {
-    return new Promise((resolve, reject) => {
-      const process = ChildProcess.execFile(nodeCliCommand, [auditCliCommand, 'auth'], {
-        env: shellEnvVariables
-      })
-      process.stdout.on('data', chunk => {
-        const httpsLinkMatch = chunk.match(/https:\/\/.*/g)
-        if (httpsLinkMatch && httpsLinkMatch.length > 0) {
-          const httpsLink = httpsLinkMatch[0].trim()
-          console.log()
-          console.log(`or you can hit this link:`)
-          console.log(`  ${httpsLink}`)
-        }
-      })
-
-      process.on('close', exitCode => {
-        return resolve()
-      })
-
-      process.on('error', error => {
-        return reject(new Error(error))
-      })
-    })
-  }
-
-  async test({ directory = '' } = {}, firstScan = true) {
+  async test({ directory = '' } = {}) {
     const ExecFile = Util.promisify(ChildProcess.execFile)
     const args = [...auditCliArgs, ...(directory ? [directory] : [])]
     let testResults
@@ -68,17 +43,20 @@ class Audit {
       }
 
       if (error.code === ERROR_VULNS_FOUND) {
-        // we are authenticated as a user for Snyk
-        // but vulnerabilities have been found
         testResults = error.stdout
       } else if (error.code === ERROR_UNAUTHENTICATED) {
-        // user is not authenticated and we need
-        // to trigger the auth process
+        console.log(`Seems like you're missing the Snyk API token.`)
+        console.log()
+        console.log(
+          `1. If you have the Snyk CLI installed you can get it with: snyk config get api`
+        )
+        console.log(
+          `2. Retrieve the API token from the UI: https://support.snyk.io/hc/en-us/articles/360004037537-Authentication-for-third-party-tools`
+        )
+        console.log()
+        console.log(`Then set an environment variable SNYK_TOKEN with the API token value`)
 
-        console.log(`Seems like you're not authenticated to Snyk,`)
-        console.log(`so redirecting you now and after login I'll show scan results here`)
-        await this.authenticate()
-        return this.test({ directory }, false)
+        throw new Error('missing Snyk API token')
       } else {
         throw error
       }

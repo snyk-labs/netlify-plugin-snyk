@@ -14,7 +14,7 @@ module.exports = {
       testResults = await audit.test({ directory: projectDirectory })
       vulnerabilitiesFound = true
     } catch (error) {
-      utils.build.failBuild(error)
+      utils.build.failBuild(error.message)
     }
 
     if (vulnerabilitiesFound && testResults) {
