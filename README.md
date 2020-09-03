@@ -49,6 +49,26 @@ To obtain a Snyk API token go to `https://app.snyk.io/account`.
 - The Snyk security test runs on the `onPreBuild` event which means it gets triggered first, before a build has even started so it can fail fast and quick if any issues are found and you can attend to fixin them first.
 - The security scan will automatically detect the package manager used in the project and will only scan production dependencies to reduce signal-to-noise ratio.
 
+# Configuration
+
+## Plugin inputs
+
+The plugin can be configured via a `plugis.inputs` section on the `netlify.toml` file. For example:
+
+```
+[[plugins]]
+  package = "netlify-plugin-snyk"
+
+  [plugins.inputs]
+    failOnPreviews = true
+```
+
+Available plugin configuration via inputs:
+
+| name             | description                                                                                      | default                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| `failOnPreviews` | Set this to false if you want to allow deploy previews to pass with a failed Snyk security scan. | `true` and it means deploy previews will fail if Snyk detects security issues |
+
 # Contributing
 
 Please consult [CONTRIBUTING](./CONTRIBUTING.md) for guidelines on contributing to this project.
