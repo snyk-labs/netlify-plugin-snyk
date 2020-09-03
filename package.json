@@ -24,9 +24,11 @@
   "license": "Apache-2.0",
   "keywords": [
     "netlify",
+    "netlify-plugin",
     "plugin",
     "security",
     "vulnerabilities",
+    "cve",
     "snyk",
     "build"
   ],
