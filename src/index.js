@@ -4,7 +4,7 @@ const Audit = require('./Audit')
 const audit = new Audit()
 
 module.exports = {
-  onPostBuild: async ({ utils }) => {
+  onPreBuild: async ({ utils }) => {
     const projectDirectory = process.cwd()
     debug(`detected working directory: `, projectDirectory)
 
