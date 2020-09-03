@@ -42,6 +42,11 @@ How to add security controls to your website build pipeline in 3 easy steps?
 
 3. **Deploy safely** 🐶
 
+# How it works?
+
+- The Snyk security test runs on the `onPreBuild` event which means it gets triggered first, before a build has even started so it can fail fast and quick if any issues are found and you can attend to fixin them first.
+- The security scan will automatically detect the package manager used in the project and will only scan production dependencies to reduce signal-to-noise ratio.
+
 # Configuration
 
 TBD
