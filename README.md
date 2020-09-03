@@ -49,14 +49,6 @@ To obtain a Snyk API token go to `https://app.snyk.io/account`.
 - The Snyk security test runs on the `onPreBuild` event which means it gets triggered first, before a build has even started so it can fail fast and quick if any issues are found and you can attend to fixin them first.
 - The security scan will automatically detect the package manager used in the project and will only scan production dependencies to reduce signal-to-noise ratio.
 
-# Configuration
-
-TBD
-
-# Example
-
-TBD
-
 # Contributing
 
 Please consult [CONTRIBUTING](./CONTRIBUTING.md) for guidelines on contributing to this project.
