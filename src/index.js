@@ -30,7 +30,7 @@ module.exports = {
       })
     } else {
       console.log(chalk.green(`Snyk security test completed. no vulnerable paths found.`))
-      console.log(chalk.green(`You're good to go, sir!`))
+      console.log(chalk.green(`You're good to go!`))
 
       utils.status.show({
         title: 'Snyk security scan finished',
