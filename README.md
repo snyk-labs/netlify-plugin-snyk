@@ -69,6 +69,13 @@ Available plugin configuration via inputs:
 | ---------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
 | `failOnPreviews` | Set this to false if you want to allow deploy previews to pass with a failed Snyk security scan. | `true` and it means deploy previews will fail if Snyk detects security issues |
 
+Future configuration options to be added:
+
+- Set the Snyk organization to associate with the scan
+- Set severity level thresholds on which to fail
+- Set the Snyk API token via an input configuration (but recommend against setting it in code)
+- Set the plugin to automatically monitor the project on the Snyk UI (configurable to 'never', 'all', 'deploys')
+
 # Contributing
 
 Please consult [CONTRIBUTING](./CONTRIBUTING.md) for guidelines on contributing to this project.
