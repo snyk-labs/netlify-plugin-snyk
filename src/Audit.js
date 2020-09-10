@@ -12,14 +12,13 @@ const ERROR_VULNS_FOUND = 1
 const ERROR_UNAUTHENTICATED = 2
 const JSON_BUFFER_SIZE = 50 * 1024 * 1024
 
-const SNYK_TOKEN = process.env.SNYK_TOKEN
-
-const shellEnvVariables = Object.assign({}, process.env, {
-  SNYK_TOKEN
-})
-
 class Audit {
-  async test({ directory = '' } = {}) {
+  async test({ directory }) {
+    const SNYK_TOKEN = process.env.SNYK_TOKEN
+    const shellEnvVariables = Object.assign({}, process.env, {
+      SNYK_TOKEN
+    })
+
     const ExecFile = Util.promisify(ChildProcess.execFile)
     const args = [...auditCliArgs, ...(directory ? [directory] : [])]
     let testResults
@@ -57,12 +56,6 @@ class Audit {
         console.log(`Then set an environment variable SNYK_TOKEN with the API token value`)
 
         throw new Error('missing Snyk API token')
-      } else {
-        throw error
-      }
-
-      if (error.stderr) {
-        throw error
       }
     }
 
@@ -70,20 +63,7 @@ class Audit {
   }
 
   formatOutput(testResults) {
-    if (!testResults) {
-      return null
-    }
-
-    let testResultsString = testResults
-    testResultsString = testResultsString.replace(/Testing.*\n/g, '')
-    testResultsString = testResultsString.replace(/Organization.*/g, '')
-    testResultsString = testResultsString.replace(/Project name.*/g, '')
-    testResultsString = testResultsString.replace(/Open source.*/g, '')
-    testResultsString = testResultsString.replace(/Project path.*/g, '')
-    testResultsString = testResultsString.replace(/Licenses.*/g, '')
-    testResultsString = testResultsString.replace(/Run.*/g, '')
-    testResultsString = testResultsString.replace(/\n\n\n/g, '')
-
+    const testResultsString = testResults
     return testResultsString.trim()
   }
 }

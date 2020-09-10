@@ -3,10 +3,9 @@ const debug = require('debug')('netlify-plugin-snyk')
 const Audit = require('./Audit')
 const audit = new Audit()
 
-const IS_DEPLOY_PREVIEW = process.env.CONTEXT === 'deploy-preview'
-
 module.exports = {
   onPreBuild: async ({ inputs, utils }) => {
+    const IS_DEPLOY_PREVIEW = process.env.CONTEXT === 'deploy-preview'
     const projectDirectory = process.cwd()
     debug(`detected working directory: `, projectDirectory)
 
@@ -16,15 +15,16 @@ module.exports = {
       testResults = await audit.test({ directory: projectDirectory })
       vulnerabilitiesFound = true
     } catch (error) {
-      utils.build.failBuild(error.message)
+      return utils.build.failBuild(error.message)
     }
 
     if (vulnerabilitiesFound && testResults) {
       const testResultsString = audit.formatOutput(testResults)
       console.log(testResultsString)
+      console.log()
       console.log(chalk.red(`Snyk test found security vulnerabilities in production dependencies.`))
       console.log(chalk.red(`It is recommended you review before deploying`))
-      if (IS_DEPLOY_PREVIEW && inputs.failOnPreviews) {
+      if (IS_DEPLOY_PREVIEW && inputs.failOnPreviews === false) {
         console.log(
           'Skipping build failure: detected this build is a deploy preview and plugin set to avoid failures'
         )
