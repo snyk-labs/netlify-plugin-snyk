@@ -25,6 +25,7 @@ jobs:
         run: npx codecov
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+          SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
 
   release:
     name: do semantic release
