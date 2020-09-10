@@ -21,11 +21,12 @@ jobs:
         run: npm run lint
       - name: run tests
         run: npm run test
+        env:
+          SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
       - name: get code coverage report
         run: npx codecov
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
-          SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
 
   release:
     name: do semantic release
