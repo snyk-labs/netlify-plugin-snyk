@@ -26,13 +26,15 @@ How to add security controls to your website build pipeline in 3 easy steps?
 
 1. **Add the plugin!**
 
-   Add the plugin to your project's dependencies:
+   If you're using Netlify's UI, browse the _Plugins_ directory and add `netlify-plugin-snyk` to your website project.
+   
+   Otherwise, if you use Netlify's configuration then add the plugin to your project's dependencies:
 
    ```
    npm install netlify-plugin-snyk --save-dev
    ```
 
-   If you're using Netlify's UI, browse the _Plugins_ directory and add `netlify-plugin-snyk` to your website project. Or you can also declare the plugin via a `netlify.yoml` configuration file as follows:
+   and then declare the plugin via a `netlify.yoml` configuration file as follows:
 
    ```
    # netlify.toml
