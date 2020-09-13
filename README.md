@@ -25,6 +25,7 @@ A Snyk Netlify build plugin to add to your Netlify website's pipeline and guard 
 How to add security controls to your website build pipeline in 3 easy steps?
 
 1. **Add the plugin!**
+
    Add the plugin to your project's dependencies:
 
    ```
