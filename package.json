@@ -217,6 +217,7 @@
     "@semantic-release/github"
   ],
   "files": [
-    "src"
+    "src",
+    "manifest.yml"
   ]
 }
