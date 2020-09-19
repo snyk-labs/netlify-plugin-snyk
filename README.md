@@ -27,7 +27,7 @@ How to add security controls to your website build pipeline in 3 easy steps?
 1. **Add the plugin!**
 
    If you're using Netlify's UI, browse the _Plugins_ directory and add `netlify-plugin-snyk` to your website project.
-   
+
    Otherwise, if you use Netlify's configuration then add the plugin to your project's dependencies:
 
    ```
@@ -48,7 +48,7 @@ How to add security controls to your website build pipeline in 3 easy steps?
 
    Note: For CI integrations and alike, we recommend creating a [Service account](https://support.snyk.io/hc/en-us/articles/360004037597-Service-accounts) (available on the [pro plan](https://app.snyk.io/org/lirantal/manage/billing)) at an org-level to avoid coupling the Snyk token to a personal user account.
 
-To obtain a Snyk API token go to `https://app.snyk.io/account`.
+To obtain a Snyk API token visit your [Snyk account page](https://app.snyk.io/account).
 
 3. **Deploy safely** 🐶
 
