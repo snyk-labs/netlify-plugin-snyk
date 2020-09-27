@@ -18,7 +18,7 @@ class Audit {
     const SNYK_TOKEN = process.env.SNYK_TOKEN
     const shellEnvVariables = Object.assign({}, process.env, {
       SNYK_TOKEN,
-      SNYK_INTEGRATION_NAME: packageInfo.name,
+      SNYK_INTEGRATION_NAME: 'NETLIFY_PLUGIN',
       SNYK_INTEGRATION_VERSION: packageInfo.version
     })
 
