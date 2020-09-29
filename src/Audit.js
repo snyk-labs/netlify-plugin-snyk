@@ -4,6 +4,7 @@
 const Util = require('util')
 const debug = require('debug')('netlify-plugin-snyk')
 const ChildProcess = require('child_process')
+const packageInfo = require('../package.json')
 
 const nodeCliCommand = 'npx'
 const auditCliCommand = 'snyk'
@@ -16,7 +17,9 @@ class Audit {
   async test({ directory }) {
     const SNYK_TOKEN = process.env.SNYK_TOKEN
     const shellEnvVariables = Object.assign({}, process.env, {
-      SNYK_TOKEN
+      SNYK_TOKEN,
+      SNYK_INTEGRATION_NAME: 'NETLIFY_PLUGIN',
+      SNYK_INTEGRATION_VERSION: packageInfo.version
     })
 
     const ExecFile = Util.promisify(ChildProcess.execFile)
