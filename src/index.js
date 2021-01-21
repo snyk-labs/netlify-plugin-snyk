@@ -12,7 +12,7 @@ module.exports = {
     let testResults
     let vulnerabilitiesFound = false
     try {
-      testResults = await audit.test({ directory: projectDirectory })
+      testResults = await audit.test({ directory: projectDirectory, inputs })
       vulnerabilitiesFound = true
     } catch (error) {
       return utils.build.failBuild(error.message)

@@ -14,7 +14,7 @@ const ERROR_UNAUTHENTICATED = 2
 const JSON_BUFFER_SIZE = 50 * 1024 * 1024
 
 class Audit {
-  async test({ directory }) {
+  async test({ directory, inputs = {} }) {
     const SNYK_TOKEN = process.env.SNYK_TOKEN
     const shellEnvVariables = Object.assign({}, process.env, {
       SNYK_TOKEN,
@@ -23,7 +23,11 @@ class Audit {
     })
 
     const ExecFile = Util.promisify(ChildProcess.execFile)
-    const args = [...auditCliArgs, ...(directory ? [directory] : [])]
+    const args = [
+      ...auditCliArgs,
+      ...(directory ? [directory] : []),
+      ...(inputs.yarnWorkspaces ? ['--yarn-workspaces'] : [])
+    ]
     let testResults
     try {
       // allow for 50MB of buffer for a large JSON output

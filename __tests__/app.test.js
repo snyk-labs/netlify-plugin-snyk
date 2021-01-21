@@ -1,4 +1,6 @@
+/* eslint-disable security/detect-child-process */
 const path = require('path')
+const ChildProcess = require('child_process')
 const plugin = require('../src/index')
 
 const utils = {
@@ -11,8 +13,16 @@ const utils = {
 }
 
 describe('onPreBuild', () => {
+  let consoleSpy
+  beforeEach(() => {
+    consoleSpy = jest.spyOn(global.console, 'log')
+  })
+
+  afterEach(() => {
+    consoleSpy.mockRestore()
+  })
+
   test('No vulnerabilities detected show a success message', async () => {
-    const consoleSpy = jest.spyOn(global.console, 'log')
     process.chdir(path.resolve(path.join(__dirname, './__fixtures__/fixture-no-vulns')))
 
     await plugin.onPreBuild({ utils })
@@ -30,11 +40,9 @@ describe('onPreBuild', () => {
     )
 
     utils.status.show.mockReset()
-    consoleSpy.mockReset()
   })
 
   test('If vulnerabilities are found fail the build', async () => {
-    const consoleLogSpy = jest.spyOn(global.console, 'log')
     process.chdir(path.resolve(path.join(__dirname, './__fixtures__/fixture-vulns-found')))
 
     await plugin.onPreBuild({ utils })
@@ -44,12 +52,10 @@ describe('onPreBuild', () => {
       expect.stringContaining('security vulnerabilities detected.')
     )
 
-    consoleLogSpy.mockReset()
     utils.build.failBuild.mockReset()
   })
 
   test('Show error when dependencies manifest is missing', async () => {
-    const consoleSpy = jest.spyOn(global.console, 'log')
     process.chdir(path.resolve(path.join(__dirname, './__fixtures__/fixture-error-no-deps')))
 
     await plugin.onPreBuild({ utils })
@@ -59,12 +65,10 @@ describe('onPreBuild', () => {
       expect.stringContaining('missing node_modules folders')
     )
 
-    consoleSpy.mockReset()
     utils.build.failBuild.mockReset()
   })
 
   test('Show error when no supported manifest files exist', async () => {
-    const consoleSpy = jest.spyOn(global.console, 'log')
     process.chdir(
       path.resolve(path.join(__dirname, './__fixtures__/fixture-error-no-supported-files'))
     )
@@ -76,14 +80,12 @@ describe('onPreBuild', () => {
       expect.stringContaining("can't detect package manifest files")
     )
 
-    consoleSpy.mockReset()
     utils.build.failBuild.mockReset()
   })
 
   test('Show error when no Snyk token is provided', async () => {
     const SNYK_TOKEN_VALUE = process.env.SNYK_TOKEN
     process.env.SNYK_TOKEN = ''
-    const consoleSpy = jest.spyOn(global.console, 'log')
     process.chdir(path.resolve(path.join(__dirname, './__fixtures__/fixture-no-vulns')))
 
     await plugin.onPreBuild({ utils })
@@ -106,13 +108,11 @@ describe('onPreBuild', () => {
       expect.stringContaining('missing Snyk API token')
     )
 
-    consoleSpy.mockReset()
     utils.build.failBuild.mockReset()
     process.env.SNYK_TOKEN = SNYK_TOKEN_VALUE
   })
 
-  test('Dont fail the build if this is a deploy preview and appropriate setting was configured for that', async () => {
-    const consoleSpy = jest.spyOn(global.console, 'log')
+  test('Does not fail the build if this is a deploy preview and appropriate setting was configured for that', async () => {
     process.chdir(path.resolve(path.join(__dirname, './__fixtures__/fixture-vulns-found')))
 
     process.env.CONTEXT = 'deploy-preview'
@@ -142,7 +142,44 @@ describe('onPreBuild', () => {
       )
     )
 
-    consoleSpy.mockReset()
     utils.build.failBuild.mockReset()
+  })
+
+  test('Does not add yarn workspaces argument by default', async () => {
+    const childProcessSpy = jest.spyOn(ChildProcess, 'execFile')
+    process.chdir(path.resolve(path.join(__dirname, './__fixtures__/fixture-no-vulns')))
+
+    await plugin.onPreBuild({ utils })
+
+    expect(childProcessSpy).toHaveBeenCalledWith(
+      'npx',
+      expect.not.arrayContaining(['--yarn-workspaces']),
+      expect.any(Object),
+      expect.any(Function)
+    )
+
+    utils.status.show.mockReset()
+    childProcessSpy.mockRestore()
+  })
+
+  test('Add yarn workspaces argument when the appropriate setting is configured', async () => {
+    const childProcessSpy = jest.spyOn(ChildProcess, 'execFile')
+    process.chdir(path.resolve(path.join(__dirname, './__fixtures__/fixture-no-vulns')))
+
+    const inputs = {
+      yarnWorkspaces: true
+    }
+
+    await plugin.onPreBuild({ utils, inputs })
+
+    expect(childProcessSpy).toHaveBeenCalledWith(
+      'npx',
+      expect.arrayContaining(['--yarn-workspaces']),
+      expect.any(Object),
+      expect.any(Function)
+    )
+
+    utils.status.show.mockReset()
+    childProcessSpy.mockRestore()
   })
 })
