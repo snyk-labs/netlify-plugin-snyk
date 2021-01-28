@@ -61,7 +61,7 @@ To obtain a Snyk API token visit your [Snyk account page](https://app.snyk.io/ac
 
 ## Plugin inputs
 
-The plugin can be configured via a `plugis.inputs` section on the `netlify.toml` file. For example:
+The plugin can be configured via a `plugins.inputs` section on the `netlify.toml` file. For example:
 
 ```
 [[plugins]]
@@ -69,13 +69,15 @@ The plugin can be configured via a `plugis.inputs` section on the `netlify.toml`
 
   [plugins.inputs]
     failOnPreviews = true
+    yarnWorkspaces = false
 ```
 
 Available plugin configuration via inputs:
 
-| name             | description                                                                                      | default                                                                       |
-| ---------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| `failOnPreviews` | Set this to false if you want to allow deploy previews to pass with a failed Snyk security scan. | `true` and it means deploy previews will fail if Snyk detects security issues |
+| name             | description                                                                                        | default                                                                       |
+| ---------------- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `failOnPreviews` | Set this to false if you want to allow deploy previews to pass with a failed Snyk security scan.   | `true` and it means deploy previews will fail if Snyk detects security issues |
+| `yarnWorkspaces` | If your repository uses Yarn Workspaces set this to `true` which adds the `--yarn-workspaces` flag | `false`                                                                       |
 
 Future configuration options to be added:
 

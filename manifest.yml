@@ -1,10 +1,10 @@
 name: netlify-plugin-snyk
 inputs:
-  - name: severity
-    required: false
-    description: Set to one of `low`, `medium`, or `high` to only fail on a specific threshold of vulnerabilities. Default is `low` and means all vulnerabilities will fail the build.
-    default: low
   - name: failOnPreviews
     required: false
     description: Set this to false if you want to allow deploy previews to pass with a failed Snyk security scan. Default is `true` and means deploy previews will fail if Snyk detects security issues.
     default: true
+  - name: yarnWorkspaces
+    required: false
+    description: If your repository uses Yarn Workspaces set this to `true` which adds the `--yarn-workspaces` flag
+    default: false
