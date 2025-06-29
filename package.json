@@ -41,7 +41,7 @@
     "url": "https://github.com/snyk-labs/netlify-plugin-snyk.git"
   },
   "dependencies": {
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.2",
     "debug": "^4.1.1",
     "snyk": "^1.733.0"
   },
